@@ -1,10 +1,10 @@
 class Macmon < Formula
   desc "Lightweight macOS system monitor with native process picker UI"
   homepage "https://github.com/chochy2001/macmon"
-  url "https://github.com/chochy2001/macmon/releases/download/v2.1.2/macmon-2.1.2-macos-universal.tar.gz"
-  sha256 "961aeb6e62a9a212b6562380f0f62d988df18d0bb660945abf704df4c4c7334e"
+  url "https://github.com/chochy2001/macmon/releases/download/v3.1.2/macmon-3.1.2-macos-universal.tar.gz"
+  sha256 "72e34a1a97be13a1913f3669f6985e391007662cc522090d9fe097168d04bad8"
   license "MIT"
-  version "2.1.2"
+  version "3.1.2"
 
   depends_on "jq"
   depends_on :macos => :ventura
@@ -19,6 +19,9 @@ class Macmon < Formula
     libexec.install "scripts"
     libexec.install "config"
     libexec.install "templates"
+
+    # App icon
+    libexec.install "icono_app.png" if File.exist?("icono_app.png")
 
     # Localization resources
     resource_src = buildpath/"src/gui/Resources"
