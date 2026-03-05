@@ -1,7 +1,7 @@
 class Omnimon < Formula
   desc "Next-gen cross-platform system monitor with AI optimization"
-  homepage "https://github.com/chochy2001/macmon"
-  url "https://github.com/chochy2001/macmon/releases/download/v3.2.0/macmon-3.2.0-macos-universal.tar.gz"
+  homepage "https://github.com/chochy2001/omnimon"
+  url "https://github.com/chochy2001/omnimon/releases/download/v3.2.0/macmon-3.2.0-macos-universal.tar.gz"
   sha256 "83b16d9876d1313b764f2195ffb3522fb49e537b7fe0cd565fa01355cbcc4ff4"
   license "MIT"
   version "3.2.0"
@@ -10,7 +10,6 @@ class Omnimon < Formula
   depends_on :macos => :ventura
 
   def install
-    # The tarball contains pre-compiled universal binaries (arm64 + x86_64)
     libexec.install "ProcessPicker"
     libexec.install "DiskIOHelper"
     libexec.install "MacmonStatusBar"
@@ -20,16 +19,13 @@ class Omnimon < Formula
     libexec.install "config"
     libexec.install "templates"
 
-    # App icon
     libexec.install "icono_app.png" if File.exist?("icono_app.png")
 
-    # Localization resources
     resource_src = buildpath/"src/gui/Resources"
     if resource_src.exist?
       (libexec/"Resources").install resource_src.children
     end
 
-    # CLI wrapper that initializes config on first run
     (bin/"macmon").write <<~EOS
       #!/usr/bin/env bash
       export MACMON_HOME="#{libexec}"
@@ -71,8 +67,6 @@ class Omnimon < Formula
 
       Configuration: ~/.config/macmon/macmon.yaml
       Logs:          ~/.local/log/macmon/macmond.log
-
-      Config and log directories are created automatically on first run.
     EOS
   end
 
