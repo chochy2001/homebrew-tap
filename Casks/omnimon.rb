@@ -12,8 +12,11 @@ cask "omnimon" do
   app "OmniMon.app"
 
   postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-rd", "com.apple.quarantine", "#{appdir}/OmniMon.app"],
+                   sudo: false
     ohai "Launching OmniMon..."
-    system "open", "/Applications/OmniMon.app"
+    system_command "/usr/bin/open", args: ["#{appdir}/OmniMon.app"]
   end
 
   uninstall quit: "com.omnimon.desktop"
@@ -29,9 +32,12 @@ cask "omnimon" do
   caveats <<~EOS
     OmniMon is now in your Applications folder.
 
-    To open:  ⌘ + Space → type "OmniMon"
+    To open:  Cmd + Space → type "OmniMon"
     Or run:   open /Applications/OmniMon.app
 
     OmniMon also runs in your menu bar tray.
+
+    If macOS blocks the app, run:
+      sudo xattr -rd com.apple.quarantine /Applications/OmniMon.app
   EOS
 end
